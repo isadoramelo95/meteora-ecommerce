@@ -5,7 +5,7 @@ import Image from "next/image";
 import styles from "./page.module.css";
 
 const Produto = ({ produto }) => {
-  const [selectedColor, setSelectedColor] = useState(produto.cores[0]?.nome);
+  const [selectedColor, setSelectedColor] = useState(produto?.cores?.[0]?.nome ?? "");
   const [selectedSize, setSelectedSize] = useState(produto?.tamanho ?? "");
 
   return (
@@ -29,14 +29,14 @@ const Produto = ({ produto }) => {
           <p className={styles.price}>{produto.preco}</p>
           <div className={styles.options}>
             <div className={styles.colors}>
-              {produto.cores.map((cor) => (
+              {produto.cores?.map((cor) => (
                 <button
                   key={cor.nome}
                   style={{ backgroundColor: cor.hexa }}
                   onClick={() => setSelectedColor(cor.nome)}
                   aria-label={cor.nome}
                   className={`${styles.colorOption} ${
-                    selectedColor === cor.nome && styles.selectedColor
+                    selectedColor === cor.nome ? styles.selectedColor : ""
                   }`}
                 />
               ))}
