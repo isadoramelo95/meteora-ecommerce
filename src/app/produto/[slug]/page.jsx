@@ -22,14 +22,18 @@ export default async function ProdutoPage({ params }) {
 }
 
 
-export default async function ProdutoPage({ params }) {
-  const produto = await getProduto(params.slug);
-
-  return (
-    <main className={styles.main}>
-      <Produto produto={produto} />
-    </main>
+export async function generateStaticParams() {
+  const res = await fetch(
+      `https://api.npoint.io/bec4b014b8fd7ffb93a3/produtos`
   );
+
+  const produtos = await res.json();
+
+  const result = produtos.map((produto) => ({
+      slug: produto.id.toString(),
+  }));
+
+  return result;
 }
 
 
